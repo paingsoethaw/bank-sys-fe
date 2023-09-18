@@ -1,16 +1,13 @@
-import { useEffect, useState } from "react";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../hooks";
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import {
   User,
   // Transaction,
   // addUser,
   // makeDeposit,
   makeWithdrawal,
-  userSelector,
-} from "../features/users/userSlice";
+  userSelector
+} from '../features/users/userSlice';
 
 function Account() {
   const dispatch = useAppDispatch();
@@ -21,8 +18,7 @@ function Account() {
 
   useEffect(() => {
     setUserDetails(selectedUser);
-    return () => {
-    };
+    return () => {};
   }, [selectedUser]);
 
   function handleDeposit() {
@@ -54,8 +50,6 @@ function Account() {
           Deposit
         </button>
       </div>
-
-
     </div>
   );
 }

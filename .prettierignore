@@ -1,0 +1,8 @@
+# Ignore artifacts:
+dist
+build
+node_modules
+.next
+.vscode
+.firebase
+fake_data

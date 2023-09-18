@@ -1,18 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   // useAppDispatch,
-  useAppSelector,
-} from "../hooks";
+  useAppSelector
+} from '../hooks';
 import {
   User,
   // Transaction,
   // addUser,
   // makeDeposit,
   // makeWithdrawal,
-  userSelector,
-} from "../features/users/userSlice";
+  userSelector
+} from '../features/users/userSlice';
 
-function CalculateSavings(amount: number, years: number, ratePercent: number, roundToPlaces: number) {
+function CalculateSavings(
+  amount: number,
+  years: number,
+  ratePercent: number,
+  roundToPlaces: number
+) {
   const interestRate = ratePercent / 100 + 1;
   return (amount * Math.pow(interestRate, years)).toFixed(roundToPlaces);
 }
@@ -26,12 +31,13 @@ function Saving() {
 
   useEffect(() => {
     setUserDetails(selectedUser);
-    return () => {
-    };
+    return () => {};
   }, [selectedUser]);
 
   function handleCalculate() {
-    setCalculatedSavingAmount(CalculateSavings(userDetails?.balance || 0, noOfYears, interestRate, 2));
+    setCalculatedSavingAmount(
+      CalculateSavings(userDetails?.balance || 0, noOfYears, interestRate, 2)
+    );
   }
 
   return (

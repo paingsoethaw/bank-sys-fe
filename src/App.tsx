@@ -1,6 +1,6 @@
-import { Routes, Route, Outlet, Link } from "react-router-dom";
-import Account from "./pages/Account";
-import Saving from "./pages/Saving";
+import { Routes, Route, Outlet, Link } from 'react-router-dom';
+import Account from './pages/Account';
+import Saving from './pages/Saving';
 
 export default function App() {
   return (
