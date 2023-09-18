@@ -1,5 +1,3 @@
-// import { useState } from "react";
-
 import { useEffect, useState } from "react";
 import {
   useAppDispatch,
@@ -7,26 +5,23 @@ import {
 } from "../hooks";
 import {
   User,
+  // Transaction,
   // addUser,
   // makeDeposit,
   makeWithdrawal,
   userSelector,
 } from "../features/users/userSlice";
 
-function UserPage() {
+function Account() {
   const dispatch = useAppDispatch();
 
   const [userDetails, setUserDetails] = useState<User>();
   const [depositAmount, setDepositAmount] = useState<number>(0);
-  // const [users, setUsers] = useState<Array<User>>([]);
-  // const [newUserName, setNewUserName] = useState<string>("");
-  // const [newUserEmail, setNewUserEmail] = useState<string>("");
   const selectedUser = useAppSelector(userSelector);
 
   useEffect(() => {
     setUserDetails(selectedUser);
     return () => {
-      console.log("component unmounting...");
     };
   }, [selectedUser]);
 
@@ -50,8 +45,8 @@ function UserPage() {
       <div>
         <input
           type="number"
-          placeholder="Deposit Amt"
-          aria-label="name"
+          placeholder="Deposit Amount"
+          aria-label="deposit-amount"
           value={depositAmount}
           onChange={(e) => setDepositAmount(parseInt(e.target.value))}
         />
@@ -60,11 +55,11 @@ function UserPage() {
         </button>
       </div>
 
-      
+
     </div>
   );
 }
-export default UserPage;
+export default Account;
 
 // function Account() {
 //   return (
