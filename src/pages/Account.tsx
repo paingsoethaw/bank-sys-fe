@@ -11,8 +11,16 @@ function Account() {
         Balance: $50000 SGD
       </div>
 
-      {/* Transaction Form modal for deposit and widthdraw*/}
+      {/* 
+      Transaction Form MODAL UI for deposit and widthdraw
+      Fields
+      - Transaction type
+      - Amount
+      - Remark
+      - Timestamp
+      */}
       <div></div>
+
       {/* Transaction Table */}
       <div></div>
     </>
