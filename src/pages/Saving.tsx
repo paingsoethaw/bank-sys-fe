@@ -1,10 +1,14 @@
 // import { useState } from "react";
 
 function Saving() {
-
   return (
     <>
-      saving
+      {/* Amount Input */}
+      {/* % Input */}
+      <div></div>
+
+      {/* comparison of saving amt and balance */}
+      <div></div>
     </>
   );
 }
