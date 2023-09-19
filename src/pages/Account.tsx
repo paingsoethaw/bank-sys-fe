@@ -137,7 +137,7 @@ function Account() {
             value={transactionAmount}
             onChange={(e) => {
               if (!e.target.value) return;
-              setTransactionAmount(parseInt(e.target.value));
+              setTransactionAmount(parseFloat(e.target.value));
             }}
           />
           <TextField
