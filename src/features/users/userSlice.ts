@@ -23,15 +23,7 @@ const initialState: User = {
   email: 'john@test.com',
   accountNo: '42209348332',
   balance: 500000,
-  transactions: [
-    {
-      type: 'DEPOSIT',
-      amount: 340.54,
-      updatedBalance: 4500030.34,
-      remark: 'ddd',
-      date: '2023-08-23'
-    }
-  ]
+  transactions: []
 };
 
 export const userSlice = createSlice({
