@@ -15,6 +15,9 @@ function Account() {
   const selectedUser = useAppSelector(userSelector);
 
   const [userDetails, setUserDetails] = useState<User>();
+
+  const [userTransactions, setUserTransactions] = useState<Array<Transaction>>();
+  const [balance, setBalance] = useState<number>(0);
   const [transactionType, setTransactionType] = useState<string>('DEPOSIT');
   const [transactionAmount, setTransactionAmount] = useState<number>(0);
   const [remark, setRemark] = useState<string>('');
@@ -22,19 +25,21 @@ function Account() {
 
   useEffect(() => {
     setUserDetails(selectedUser);
+    setUserTransactions(selectedUser.transactions);
+    setBalance(selectedUser.balance);
     return () => {};
   }, [selectedUser]);
 
   const handleFormSubmit = () => {
-    if (!userDetails || !userDetails.balance) return;
+    if (!balance) return;
 
     let updatedBalance: number = 0;
 
     if (transactionType == 'DEPOSIT') {
-      updatedBalance = userDetails.balance + transactionAmount;
+      updatedBalance = balance + transactionAmount;
     }
     if (transactionType == 'WITHDRAWAL') {
-      updatedBalance = userDetails.balance - transactionAmount;
+      updatedBalance = balance - transactionAmount;
     }
     const transactionDate = new Date();
     const transactionPayload: Transaction = {
@@ -68,7 +73,7 @@ function Account() {
         <br />
         Email: <strong>{userDetails?.email}</strong>
         <br />
-        Balance: <strong> SGD {userDetails?.balance}</strong>
+        Balance: <strong> SGD {balance}</strong>
       </div>
 
       <br />
@@ -97,9 +102,12 @@ function Account() {
       <br />
       <br />
       <br />
+
       <div>
         <h4>Transactions</h4>
-        <TransactionsTable transactions={userDetails?.transactions} />
+        {userTransactions && userTransactions.length > 0 && <TransactionsTable transactions={userDetails?.transactions} />}
+        
+        {!userTransactions || userTransactions.length < 1 && <span>No Transaction</span>}
       </div>
 
       <Dialog open={isFormOpen} onClose={handleFormClose}>
@@ -142,32 +150,3 @@ function Account() {
   );
 }
 export default Account;
-
-// function Account() {
-//   return (
-//     <>
-//       {/* Balance */}
-//       <div>
-//         <h5>Hi John!</h5>
-//         Account No: xxxxxxxx
-//         <br />
-//         Balance: $50000 SGD
-//       </div>
-
-//       {/*
-//       Transaction Form MODAL UI for deposit and withdraw
-//       Fields
-//       - Transaction type
-//       - Amount
-//       - Remark
-//       - Timestamp
-//       */}
-//       <div></div>
-
-//       {/* Transaction Table */}
-//       <div></div>
-//     </>
-//   );
-// }
-
-// export default Account;

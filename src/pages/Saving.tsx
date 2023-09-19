@@ -16,7 +16,7 @@ function CalculateSavings(
 }
 
 function Saving() {
-  const [balance, setbalance] = useState<number>(0);
+  const [balance, setBalance] = useState<number>(0);
   const [calculatedSavingAmount, setCalculatedSavingAmount] = useState<string>();
   const [increasedSavingAmount, setIncreasedSavingAmount] = useState<string>();
   const [increasedPercentage, setIncreasedPercentage] = useState<string>();
@@ -25,7 +25,7 @@ function Saving() {
   const selectedUser = useAppSelector(userSelector);
 
   useEffect(() => {
-    setbalance(selectedUser.balance);
+    setBalance(selectedUser.balance);
     return () => {};
   }, [selectedUser]);
 

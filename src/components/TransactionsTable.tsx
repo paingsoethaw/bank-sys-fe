@@ -19,10 +19,10 @@ export default function TransactionsTable(props: ITransactionsProps) {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Transaction Type</TableCell>
-            <TableCell align="right">Amount</TableCell>
-            <TableCell>Remark</TableCell>
-            <TableCell>Date</TableCell>
+            <TableCell><strong>Transaction Type</strong></TableCell>
+            <TableCell align="right"><strong>Amount</strong></TableCell>
+            <TableCell><strong>Remark</strong></TableCell>
+            <TableCell><strong>Date</strong></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
