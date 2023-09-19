@@ -4,7 +4,9 @@ import { RootState } from '../../store';
 export interface Transaction {
   type: string;
   amount: number;
-  remainingBalance: number;
+  updatedBalance: number;
+  remark?: string;
+  date: string;
 }
 export interface User {
   id: string;
@@ -21,40 +23,30 @@ const initialState: User = {
   email: 'john@test.com',
   accountNo: '42209348332',
   balance: 500000,
-  transactions: []
+  transactions: [
+    {
+      type: 'DEPOSIT',
+      amount: 340.54,
+      updatedBalance: 4500030.34,
+      remark: 'ddd',
+      date: '2023-08-23'
+    }
+  ]
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    addUser: (state, action: PayloadAction<User>) => {
-      state = action.payload;
-    },
-    makeDeposit: (state, action: PayloadAction<number>) => {
-      const remainingBalance = state.balance + action.payload;
-      const depositeData: Transaction = {
-        type: 'DEPOSIT',
-        amount: action.payload,
-        remainingBalance: remainingBalance
-      };
-      state.transactions.push(depositeData);
-      state.balance = state.balance + action.payload;
-    },
-    makeWithdrawal: (state, action: PayloadAction<number>) => {
-      const remainingBalance = state.balance - action.payload;
-      const withdrawalData: Transaction = {
-        type: 'WITHDRAWAL',
-        amount: action.payload,
-        remainingBalance: remainingBalance
-      };
-      state.transactions.push(withdrawalData);
-      state.balance = remainingBalance;
+    createTransaction: (state, action: PayloadAction<Transaction>) => {
+      const depositePayload = action.payload;
+      state.balance = depositePayload.updatedBalance;
+      state.transactions.push(depositePayload);
     }
   }
 });
 
-export const { addUser, makeDeposit, makeWithdrawal } = userSlice.actions;
+export const { createTransaction } = userSlice.actions;
 
 export const userSelector = (state: RootState) => state.userReducer;
 
