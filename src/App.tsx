@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route, Outlet, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -31,9 +31,10 @@ export default function App() {
 }
 
 const drawerWidth = 240;
-const navItems = ['Account', 'Saving'];
 
 function Layout() {
+  const navigate = useNavigate();
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -47,13 +48,16 @@ function Layout() {
       </Typography>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <ListItem key={'account'} disablePadding>
+          <ListItemButton onClick={() => navigate('account')} sx={{ textAlign: 'center' }}>
+            <ListItemText primary={'Account'} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem key={'saving'} disablePadding>
+          <ListItemButton onClick={() => navigate('saving')} sx={{ textAlign: 'center' }}>
+            <ListItemText primary={'Saving'} />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   );
@@ -80,10 +84,10 @@ function Layout() {
             My Bank
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <Button href="account" key="account" sx={{ color: '#fff' }}>
+            <Button onClick={() => navigate('account')} key="account" sx={{ color: '#fff' }}>
               Account
             </Button>
-            <Button href="saving" key="Saving" sx={{ color: '#fff' }}>
+            <Button onClick={() => navigate('saving')} key="Saving" sx={{ color: '#fff' }}>
               Saving
             </Button>
           </Box>

@@ -19,6 +19,7 @@ function Account() {
   const [userTransactions, setUserTransactions] = useState<Array<Transaction>>();
   const [balance, setBalance] = useState<number>(0);
   const [transactionType, setTransactionType] = useState<string>('DEPOSIT');
+  const [errorMessage, setErrorMessage] = useState<string>();
   const [transactionAmount, setTransactionAmount] = useState<number>(0);
   const [remark, setRemark] = useState<string>('');
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -39,6 +40,10 @@ function Account() {
       updatedBalance = balance + transactionAmount;
     }
     if (transactionType == 'WITHDRAWAL') {
+      if (transactionAmount > balance) {
+        setErrorMessage('Unsuccessful! Balance is not enough.');
+        return;
+      }
       updatedBalance = balance - transactionAmount;
     }
     const transactionDate = new Date();
@@ -105,14 +110,22 @@ function Account() {
 
       <div>
         <h4>Transactions</h4>
-        {userTransactions && userTransactions.length > 0 && <TransactionsTable transactions={userDetails?.transactions} />}
-        
-        {!userTransactions || userTransactions.length < 1 && <span>No Transaction</span>}
+        {userTransactions && userTransactions.length > 0 && (
+          <TransactionsTable transactions={userDetails?.transactions} />
+        )}
+
+        {!userTransactions || (userTransactions.length < 1 && <span>No Transaction</span>)}
       </div>
 
       <Dialog open={isFormOpen} onClose={handleFormClose}>
         <DialogTitle>{transactionType}</DialogTitle>
         <DialogContent>
+          {errorMessage && (
+            <>
+              <span style={{ color: 'red' }}>{errorMessage}</span>
+              <br />
+            </>
+          )}
           <TextField
             autoFocus
             margin="dense"
