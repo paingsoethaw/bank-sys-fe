@@ -1,16 +1,9 @@
 import { useEffect, useState } from 'react';
-import {
-  // useAppDispatch,
-  useAppSelector
-} from '../hooks';
-import {
-  User,
-  // Transaction,
-  // addUser,
-  // makeDeposit,
-  // makeWithdrawal,
-  userSelector
-} from '../features/users/userSlice';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+
+import { useAppSelector } from '../hooks';
+import { userSelector } from '../features/users/userSlice';
 
 function CalculateSavings(
   amount: number,
@@ -23,60 +16,82 @@ function CalculateSavings(
 }
 
 function Saving() {
-  const [userDetails, setUserDetails] = useState<User>();
+  const [balance, setbalance] = useState<number>(0);
   const [calculatedSavingAmount, setCalculatedSavingAmount] = useState<string>();
+  const [increasedSavingAmount, setIncreasedSavingAmount] = useState<string>();
+  const [increasedPercentage, setIncreasedPercentage] = useState<string>();
   const [interestRate, setInterestRate] = useState<number>(0);
   const [noOfYears, setNoOfYears] = useState<number>(0);
   const selectedUser = useAppSelector(userSelector);
 
   useEffect(() => {
-    setUserDetails(selectedUser);
+    setbalance(selectedUser.balance);
     return () => {};
   }, [selectedUser]);
 
   function handleCalculate() {
-    setCalculatedSavingAmount(
-      CalculateSavings(userDetails?.balance || 0, noOfYears, interestRate, 2)
-    );
+    if (!noOfYears || !interestRate) return;
+    const totalSavings = CalculateSavings(balance || 0, noOfYears, interestRate, 2);
+    const netIncreasement = parseFloat(totalSavings) - balance;
+    const percent = ((netIncreasement / balance) * 100).toFixed(2);
+
+    setIncreasedSavingAmount(netIncreasement.toFixed(2));
+    setIncreasedPercentage(`${percent}%`);
+    setCalculatedSavingAmount(totalSavings);
   }
 
   return (
     <>
+      Balance: <strong>{balance}</strong>
+      <br />
       {/* % Input */}
       <div>
-        Years
-        <input
+        <TextField
+          autoFocus
+          margin="dense"
+          id="years"
+          label="Years"
           type="number"
-          placeholder="Years"
-          aria-label="years"
+          fullWidth
+          variant="standard"
           value={noOfYears}
-          onChange={(e) => setNoOfYears(parseInt(e.target.value))}
+          onChange={(e) => {
+            if (!e.target.value) return;
+            setNoOfYears(parseInt(e.target.value));
+          }}
         />
-        <br />
-        Interest Rate
-        <input
+        <TextField
+          autoFocus
+          margin="dense"
+          id="interestRate"
+          label="Interest Rate"
           type="number"
-          placeholder="Interest Rate"
-          aria-label="interest-rate"
+          fullWidth
+          variant="standard"
           value={interestRate}
-          onChange={(e) => setInterestRate(parseInt(e.target.value))}
+          onChange={(e) => {
+            if (!e.target.value) return;
+            setInterestRate(parseFloat(e.target.value));
+          }}
         />
         <br />
-        <button type="submit" className="btn" onClick={handleCalculate}>
+        <br />
+        <Button variant="contained" onClick={handleCalculate}>
           Calculate
-        </button>
+        </Button>
       </div>
-
       <br />
       <br />
       {/* comparison of saving amt and balance */}
-      <div>
-        Balance: {userDetails?.balance}
-        <br />
-        Number of Years: {noOfYears}
-        <br />
-        Total Savings of {noOfYears} Years: {calculatedSavingAmount}
-      </div>
+      {calculatedSavingAmount && (
+        <div>
+          Total Savings: <strong>{calculatedSavingAmount}</strong>
+          <br />
+          Net Savings: <strong>{increasedSavingAmount}</strong>
+          <br />
+          Increasement Percentage: <strong>{increasedPercentage}</strong>
+        </div>
+      )}
     </>
   );
 }

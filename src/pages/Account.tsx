@@ -60,7 +60,6 @@ function Account() {
     setIsFormOpen(false);
   };
 
-  console.log('xxx', userDetails);
   return (
     <div>
       <div>
@@ -72,7 +71,7 @@ function Account() {
         Balance: <strong> SGD {userDetails?.balance}</strong>
       </div>
 
-      <br/>
+      <br />
       <div>
         <Button
           variant="contained"
@@ -83,8 +82,8 @@ function Account() {
         >
           Deposit
         </Button>
-        <br/>
-        <br/>
+        <br />
+        <br />
         <Button
           variant="contained"
           onClick={() => {
@@ -115,7 +114,10 @@ function Account() {
             fullWidth
             variant="standard"
             value={transactionAmount}
-            onChange={(e) => setTransactionAmount(parseInt(e.target.value))}
+            onChange={(e) => {
+              if (!e.target.value) return;
+              setTransactionAmount(parseInt(e.target.value));
+            }}
           />
           <TextField
             autoFocus
