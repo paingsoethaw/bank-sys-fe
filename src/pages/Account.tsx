@@ -8,6 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { User, Transaction, createTransaction, userSelector } from '../features/users/userSlice';
+import TransactionsTable from '../components/TransactionsTable';
 
 function Account() {
   const dispatch = useAppDispatch();
@@ -97,6 +98,10 @@ function Account() {
       <br />
       <br />
       <br />
+      <div>
+        <h4>Transactions</h4>
+        <TransactionsTable transactions={userDetails?.transactions} />
+      </div>
 
       <Dialog open={isFormOpen} onClose={handleFormClose}>
         <DialogTitle>{transactionType}</DialogTitle>
